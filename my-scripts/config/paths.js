@@ -41,7 +41,7 @@ const moduleFileExtensions = [
   "jsx",
 ];
 
-// 解析文件路径的函数
+// 解析文件路径的函数, 如果 filePath 的文件拓展名符合且存在该文件, 则返回路径, 否则默认返回为 js 文件路径
 const resolveModule = (resolveFn, filePath) => {
   const extension = moduleFileExtensions.find((extension) =>
     fs.existsSync(resolveFn(`${filePath}.${extension}`))
@@ -61,18 +61,18 @@ module.exports = {
   appBuild: resolveApp(buildPath), // /home/user/my-cra/build
   appPublic: resolveApp("public"), // /home/user/my-cra/public
   appHtml: resolveApp("public/index.html"), // /home/user/my-cra/public/index.html
-  appIndexJs: resolveModule(resolveApp, "src/index"),
-  appPackageJson: resolveApp("package.json"),
-  appSrc: resolveApp("src"),
-  appTsConfig: resolveApp("tsconfig.json"),
-  appJsConfig: resolveApp("jsconfig.json"),
-  yarnLockFile: resolveApp("yarn.lock"),
-  testsSetup: resolveModule(resolveApp, "src/setupTests"),
-  proxySetup: resolveApp("src/setupProxy.js"),
-  appNodeModules: resolveApp("node_modules"),
-  appWebpackCache: resolveApp("node_modules/.cache"),
-  appTsBuildInfoFile: resolveApp("node_modules/.cache/tsconfig.tsbuildinfo"),
-  swSrc: resolveModule(resolveApp, "src/service-worker"),
+  appIndexJs: resolveModule(resolveApp, "src/index"), // /home/user/my-cra/src/index.js
+  appPackageJson: resolveApp("package.json"), // /home/user/my-cra/package.json
+  appSrc: resolveApp("src"), // /home/user/my-cra/src
+  appTsConfig: resolveApp("tsconfig.json"), // /home/user/my-cra/tsconfig.json
+  appJsConfig: resolveApp("jsconfig.json"), // /home/user/my-cra/jsconfig.json
+  yarnLockFile: resolveApp("yarn.lock"), // /home/user/my-cra/yarn.lock
+  testsSetup: resolveModule(resolveApp, "src/setupTests"), // /home/user/my-cra/src/setupTests.js
+  proxySetup: resolveApp("src/setupProxy.js"), // /home/user/my-cra/src/setupProxy.js
+  appNodeModules: resolveApp("node_modules"), // /home/user/my-cra/node_modules
+  appWebpackCache: resolveApp("node_modules/.cache"), // /home/user/my-cra/node_modules/.cache
+  appTsBuildInfoFile: resolveApp("node_modules/.cache/tsconfig.tsbuildinfo"), // /home/user/my-cra/node_modules/.cache/tsconfig.tsbuildinfo
+  swSrc: resolveModule(resolveApp, "src/service-worker"), // /home/user/my-cra/src/service-worker.js
   publicUrlOrPath,
 };
 
@@ -82,8 +82,8 @@ const resolveOwn = (relativePath) =>
 
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
-  dotenv: resolveApp(".env"), // 获取 .env 的绝对路径: /home/user/my-cra/.env
-  appPath: resolveApp("."), //
+  dotenv: resolveApp(".env"),
+  appPath: resolveApp("."),
   appBuild: resolveApp(buildPath),
   appPublic: resolveApp("public"),
   appHtml: resolveApp("public/index.html"),
@@ -101,13 +101,14 @@ module.exports = {
   swSrc: resolveModule(resolveApp, "src/service-worker"),
   publicUrlOrPath,
   // These properties only exist before ejecting:
-  ownPath: resolveOwn("."),
-  ownNodeModules: resolveOwn("node_modules"), // This is empty on npm 3
-  appTypeDeclarations: resolveApp("src/react-app-env.d.ts"),
-  ownTypeDeclarations: resolveOwn("lib/react-app.d.ts"),
+  ownPath: resolveOwn("."), // /home/user/my-cra/my-scripts
+  ownNodeModules: resolveOwn("node_modules"), // /home/user/my-cra/my-scripts/node_modules
+  appTypeDeclarations: resolveApp("src/react-app-env.d.ts"), // /home/user/my-cra/src/react-app-env.d.ts
+  ownTypeDeclarations: resolveOwn("lib/react-app.d.ts"), // /home/user/my-cra/lib/react-app.d.ts
 };
 
-const ownPackageJson = require("../package.json");
+// 本脚本项目的 package.json 文件路径
+const ownPackageJson = require("../../package.json");
 const reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
 const reactScriptsLinked =
   fs.existsSync(reactScriptsPath) &&
