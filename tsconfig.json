@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "lib": ["es6", "es2017.object", "es2016.array.include"],
+    "baseUrl": "./"
+  },
+  "extends": "@tsconfig/recommended/tsconfig.json"
+}

@@ -8,9 +8,29 @@
     "start": "PUBLIC_URL=//yinxiaobao.net/home/ ./my-scripts/bin/my-scripts.js --inspect start hello",
     "build": "./my-scripts/bin/my-scripts.js build",
     "test": "./my-scripts/bin/my-scripts.js test",
-    "eject": "./my-scripts/bin/my-scripts.js eject"
+    "eject": "./my-scripts/bin/my-scripts.js eject",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,cjs,mjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,less,sass,scss}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "cross-spawn": "^7.0.3"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "eslint": "^8.14.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.4.1",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.3"
   }
 }
