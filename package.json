@@ -1,0 +1,16 @@
+{
+  "name": "my-cra",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "scripts": {
+    "start": "PUBLIC_URL=//yinxiaobao.net/home/ ./my-scripts/bin/my-scripts.js --inspect start hello",
+    "build": "./my-scripts/bin/my-scripts.js build",
+    "test": "./my-scripts/bin/my-scripts.js test",
+    "eject": "./my-scripts/bin/my-scripts.js eject"
+  },
+  "dependencies": {
+    "cross-spawn": "^7.0.3"
+  }
+}
