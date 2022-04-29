@@ -13,35 +13,35 @@ const path = require("path");
 const webpack = require("webpack");
 const resolve = require("resolve");
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // webpack 插件, 用于生成 html 文件
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-const InlineChunkHtmlPlugin = require("../../react-dev-utils/InlineChunkHtmlPlugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
-const InterpolateHtmlPlugin = require("../../react-dev-utils/InterpolateHtmlPlugin");
-const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
-const ModuleScopePlugin = require("../../react-dev-utils/ModuleScopePlugin");
-const getCSSModuleLocalIdent = require("../../react-dev-utils/getCSSModuleLocalIdent");
-const ESLintPlugin = require("eslint-webpack-plugin");
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin"); // webpack 插件, 用于检测文件路径大小写
+const InlineChunkHtmlPlugin = require("../../react-dev-utils/InlineChunkHtmlPlugin"); // webpack 插件, 用于将 chunk 中的 js 插入到 html 中
+const TerserPlugin = require("terser-webpack-plugin"); // webpack 插件, 用于压缩 js, uglifyjs 的一个分支, 支持 es6
+const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // webpack 插件, 用于提取 css 文件
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin"); // webpack 插件, 用于压缩 css
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin"); // webpack 插件, 用于生成 manifest 文件
+const InterpolateHtmlPlugin = require("../../react-dev-utils/InterpolateHtmlPlugin"); // webpack 插件, 用于替换 html 文件中的变量
+const WorkboxWebpackPlugin = require("workbox-webpack-plugin"); // webpack 插件, 用于生成 service worker
+const ModuleScopePlugin = require("../../react-dev-utils/ModuleScopePlugin"); // webpack 插件, 用于检测模块范围
+const getCSSModuleLocalIdent = require("../../react-dev-utils/getCSSModuleLocalIdent"); // webpack 插件, 用于检测 css 模块范围
+const ESLintPlugin = require("eslint-webpack-plugin"); // webpack 插件, 用于检测代码规范
 const paths = require("./paths");
 const modules = require("./modules");
-const getClientEnvironment = require("./env");
-const ModuleNotFoundPlugin = require("../../react-dev-utils/ModuleNotFoundPlugin");
+const getClientEnvironment = require("./env"); // 获取环境变量
+const ModuleNotFoundPlugin = require("../../react-dev-utils/ModuleNotFoundPlugin"); // webpack 插件, 用于检测模块是否存在
 const ForkTsCheckerWebpackPlugin =
   process.env.TSC_COMPILE_ON_ERROR === "true"
     ? require("../../react-dev-utils/ForkTsCheckerWarningWebpackPlugin")
     : require("../../react-dev-utils/ForkTsCheckerWebpackPlugin");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"); // webpack 插件, 实验性, 启用快速热重载
 // @remove-on-eject-begin
-const getCacheIdentifier = require("../../react-dev-utils/getCacheIdentifier");
+const getCacheIdentifier = require("../../react-dev-utils/getCacheIdentifier"); // webpack 插件, 用于获取缓存标识
 // @remove-on-eject-end
-const createEnvironmentHash = require("./webpack/persistentCache/createEnvironmentHash");
+const createEnvironmentHash = require("./webpack/persistentCache/createEnvironmentHash"); // 接受数据 data, 然后对 data 进行 md5, 得到一个字符串
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
 
-const reactRefreshRuntimeEntry = require.resolve("react-refresh/runtime");
+const reactRefreshRuntimeEntry = require.resolve("react-refresh/runtime"); // 热重载
 const reactRefreshWebpackPluginRuntimeEntry = require.resolve(
   "@pmmmwh/react-refresh-webpack-plugin"
 );
