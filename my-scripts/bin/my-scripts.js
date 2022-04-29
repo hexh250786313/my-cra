@@ -49,6 +49,8 @@ if (["build", "eject", "start", "test"].includes(script)) {
   // /home/user/.nvm/versions/node/v16.13.0/bin/node --inspect /home/user/my-cra/my-scripts/scripts/start.js hello
   const result = spawn.sync(process.execPath, fullArgs, { stdio: "inherit" });
 
+  console.log("result", result);
+
   if (result.signal) {
     if (result.signal === "SIGKILL") {
       console.log(

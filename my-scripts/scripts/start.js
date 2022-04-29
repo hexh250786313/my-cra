@@ -13,19 +13,19 @@ process.on("unhandledRejection", (err) => {
 require("../config/env");
 
 const fs = require("fs");
-const chalk = require("react-dev-utils/chalk");
+const chalk = require("chalk");
 const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
-const clearConsole = require("react-dev-utils/clearConsole");
-const checkRequiredFiles = require("react-dev-utils/checkRequiredFiles");
+const clearConsole = require("../../react-dev-utils/clearConsole");
+const checkRequiredFiles = require("../../react-dev-utils/checkRequiredFiles");
 const {
   choosePort,
   createCompiler,
   prepareProxy,
   prepareUrls,
-} = require("react-dev-utils/WebpackDevServerUtils");
-const openBrowser = require("react-dev-utils/openBrowser");
-const semver = require("semver");
+} = require("../../react-dev-utils/WebpackDevServerUtils");
+const openBrowser = require("../../react-dev-utils/openBrowser");
+const semver = require("semver"); // 语义化版本控制模块, 如果需要控制 web app 某些依赖的版本号, 可以使用此模块来进行控制
 const paths = require("../config/paths");
 const configFactory = require("../config/webpack.config");
 const createDevServerConfig = require("../config/webpackDevServer.config");

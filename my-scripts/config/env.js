@@ -32,53 +32,42 @@ const dotenvFiles = [
 
 // 翻译: 从 .env* 文件加载环境变量, 使用 silent 来禁止警告提示
 // 如果没有这些文件的话, 则不修改已经设置的环境变量, .env 文件中支持可变拓展
+// 插入 .env 文件中的环境变量
 // https://github.com/motdotla/dotenv
 // https://github.com/motdotla/dotenv-expand
 dotenvFiles.forEach((dotenvFile) => {
   if (fs.existsSync(dotenvFile)) {
-    const { expand } = require("dotenv-expand");
     const dotenv = require("dotenv");
-    // const qq = dotenv.config({
-    // path: dotenvFile,
-    // });
-    console.log("===========", process.env);
-    // expand(qq);
-    // console.log("===========", process.env);
-
-    // require("dotenv-expand")(
-    // require("dotenv").config({
-    // path: dotenvFile,
-    // })
-    // );
+    const dotenvExpand = require("dotenv-expand");
+    const myEnv = dotenv.config({
+      path: dotenvFile,
+    });
+    dotenvExpand.expand(myEnv);
   }
 });
 
-// We support resolving modules according to `NODE_PATH`.
-// This lets you use absolute paths in imports inside large monorepos:
-// https://github.com/facebook/create-react-app/issues/253.
-// It works similar to `NODE_PATH` in Node itself:
-// https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders
-// Note that unlike in Node, only *relative* paths from `NODE_PATH` are honored.
-// Otherwise, we risk importing Node.js core modules into an app instead of webpack shims.
-// https://github.com/facebook/create-react-app/issues/1023#issuecomment-265344421
-// We also resolve them to make sure all tools using them work consistently.
-const appDirectory = fs.realpathSync(process.cwd());
-process.env.NODE_PATH = (process.env.NODE_PATH || "")
-  .split(path.delimiter)
-  .filter((folder) => folder && !path.isAbsolute(folder))
-  .map((folder) => path.resolve(appDirectory, folder))
-  .join(path.delimiter);
+console.log("================= env go ====================");
 
-// Grab NODE_ENV and REACT_APP_* environment variables and prepare them to be
-// injected into the application via DefinePlugin in webpack configuration.
+// 可以在启动命令里添加 NODE_PATH, 只支持相对路径, 用 ; 或 : 分隔不同的 node_modules 路径
+// 环境变量 NODE_PATH, 就是环境中指定的 node_modules 文件夹的路径, 可能有多个目录, 多个时
+// windows 环境下, 分号 ; 分隔, 否则是冒号 : 分隔
+const appDirectory = fs.realpathSync(process.cwd()); // web app 的绝对路径
+process.env.NODE_PATH = (process.env.NODE_PATH || "")
+  .split(path.delimiter) // 先按照不同平台的分割规则分开
+  .filter((folder) => folder && !path.isAbsolute(folder)) // 再过滤掉绝对路径
+  .map((folder) => path.resolve(appDirectory, folder)) // 拼接到 web app 的路径上
+  .join(path.delimiter); // 重新合成
+
+// 正则, 匹配环境变量的名称, 约定使用 react-scripts 时的环境变量都是以 REACT_APP_ 开头, 无视大小写
+// 例如: react_app_env=alpha
 const REACT_APP = /^REACT_APP_/i;
 
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
-    .filter((key) => REACT_APP.test(key))
+    .filter((key) => REACT_APP.test(key)) // 过滤出 REACT_APP_ 开头的环境变量
     .reduce(
       (env, key) => {
-        env[key] = process.env[key];
+        env[key] = process.env[key]; // 有一份默认的环境变量, 把 REACT_APP_ 开头的环境变量都放到里面
         return env;
       },
       {
@@ -103,7 +92,7 @@ function getClientEnvironment(publicUrl) {
         FAST_REFRESH: process.env.FAST_REFRESH !== "false",
       }
     );
-  // Stringify all values so we can feed into webpack DefinePlugin
+  // 拷贝一份
   const stringified = {
     "process.env": Object.keys(raw).reduce((env, key) => {
       env[key] = JSON.stringify(raw[key]);
