@@ -14,27 +14,27 @@ const webpack = require("webpack");
 const resolve = require("resolve");
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // webpack 插件, 用于生成 html 文件
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-const InlineChunkHtmlPlugin = require("react-dev-utils/InlineChunkHtmlPlugin");
+const InlineChunkHtmlPlugin = require("../../react-dev-utils/InlineChunkHtmlPlugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
-const InterpolateHtmlPlugin = require("react-dev-utils/InterpolateHtmlPlugin");
+const InterpolateHtmlPlugin = require("../../react-dev-utils/InterpolateHtmlPlugin");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
-const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
-const getCSSModuleLocalIdent = require("react-dev-utils/getCSSModuleLocalIdent");
+const ModuleScopePlugin = require("../../react-dev-utils/ModuleScopePlugin");
+const getCSSModuleLocalIdent = require("../../react-dev-utils/getCSSModuleLocalIdent");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const paths = require("./paths");
 const modules = require("./modules");
 const getClientEnvironment = require("./env");
-const ModuleNotFoundPlugin = require("react-dev-utils/ModuleNotFoundPlugin");
+const ModuleNotFoundPlugin = require("../../react-dev-utils/ModuleNotFoundPlugin");
 const ForkTsCheckerWebpackPlugin =
   process.env.TSC_COMPILE_ON_ERROR === "true"
-    ? require("react-dev-utils/ForkTsCheckerWarningWebpackPlugin")
-    : require("react-dev-utils/ForkTsCheckerWebpackPlugin");
+    ? require("../../react-dev-utils/ForkTsCheckerWarningWebpackPlugin")
+    : require("../../react-dev-utils/ForkTsCheckerWebpackPlugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 // @remove-on-eject-begin
-const getCacheIdentifier = require("react-dev-utils/getCacheIdentifier");
+const getCacheIdentifier = require("../../react-dev-utils/getCacheIdentifier");
 // @remove-on-eject-end
 const createEnvironmentHash = require("./webpack/persistentCache/createEnvironmentHash");
 
